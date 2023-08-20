@@ -46,9 +46,9 @@ def reflection(media, title, content):
         model="gpt-3.5-turbo",
         messages=[
                 {"role": "user", "content": f"What do you think is the contribution of this {media}?\
-                 Can you explain me like I'm five years old in one short sentence?\
+                 Can you explain me like I'm five years old in one sentence?\
                  You can directly start explaining without responding me.\
-                 title: {title}. abstract: {content}"}
+                 Title: {title}. Abstract: {content}"}
             ]
         )
     return response
@@ -90,6 +90,7 @@ for document in result_vector_storage:
     filter = {"_id": ObjectId(document['_id'])}
 
     reflection_content = document['reflection']['choices'][0]['message']['content']
+    reflection_content = f'By {document["source"]} at {document["created_time"]}, {reflection_content}'
     doc = Document(page_content=reflection_content, metadata={"source": "local"})
     store.add_documents([doc])
     new_field = "stored"
@@ -97,3 +98,6 @@ for document in result_vector_storage:
     update_query = {"$set": {new_field, new_value}}
 
     collection.update_one(filter, update_query)
+
+# Step 4: retrieve
+# retriever = store.as_retriever()
