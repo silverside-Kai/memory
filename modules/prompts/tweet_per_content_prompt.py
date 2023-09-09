@@ -24,7 +24,12 @@ def tweet_per_content_prompt(link, llm, store_basic_raw, store_latest_raw, weigh
     
     query = f"""###Prompt can you help organise the following content
       into a tweet and quantitatively assess its importance in 
-      very brief words with a score in a 0-10 range? '{tldr_with_tag}'"""
+      very brief words with a score in a 0-10 range?
+      Instruction 1: Put the importance score at the beginninng in the format "Importance Score: X/10". Replace X with your score.
+      Instruction 2: Then summarise the content into bullet points starting with relevant emoji.
+      Instruction 3: Finally if possible relate the current content to the existing work and point out its added value.
+      Add some relevant hashtags at the end if possible.
+      Content: '{tldr_with_tag}'"""
 
     try:
         llm_response = qa(query)

@@ -1,8 +1,7 @@
-POST http://localhost:8080/memory_assembly_testing
+POST http://localhost:8080/tweet_per_content
 Content-Type: application/json
 
 {
-    "content": "Why is GPT4 better than most LLMs?",
-    "tag": "",    
+    "link": "https://arxiv.org/abs/2309.03315",
     "weight": 0.5
 }
