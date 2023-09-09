@@ -27,9 +27,7 @@ llm = ChatOpenAI(model_name='gpt-3.5-turbo-16k-0613',
 tag_metadata = tag_meta()
 tag_list = [entry['tag'] for entry in tag_metadata['cmetadata']]
 
-origins = [
-    "http://localhost"
-]
+origins = ["*"]
 
 app = FastAPI()
 

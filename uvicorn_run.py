@@ -2,4 +2,4 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run("modules.api_chatbot:app",
-                host='localhost', reload=True, port=8080)
+                host="0.0.0.0", reload=True, port=8080)
