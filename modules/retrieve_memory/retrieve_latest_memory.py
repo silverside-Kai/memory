@@ -1,4 +1,4 @@
-def retrieve_working_memory(llm, store_latest_raw, user_input, tag=None):
+def retrieve_latest_memory(llm, store_latest_raw, user_input, tag=None):
     from langchain.chains import RetrievalQA
 
     if tag:

@@ -6,11 +6,11 @@ from langchain.vectorstores.pgvector import PGVector
 from langchain.schema.document import Document
 from langchain.embeddings import HuggingFaceBgeEmbeddings
 
-from modules.load_relevant_contents import load_relevant_contents
-from modules.load_to_be_embedded_docs import load_to_be_embedded_docs
-from modules.tldr import tldr
-from modules.tagify import tagify
-from modules.tag_meta import tag_meta
+from modules.load_data.load_relevant_contents import load_relevant_contents
+from modules.load_data.load_to_be_embedded_docs import load_to_be_embedded_docs
+from modules.prompts.tldr import tldr
+from modules.prompts.tagify import tagify
+from modules.load_data.tag_meta import tag_meta
 
 import pymongo
 from bson import ObjectId
@@ -76,6 +76,7 @@ class PipelineMemory:
             # Update the document to add the new field
             update_query = {"$set": {'tldr_with_tag': tldr_with_tag_objects}}
             self.mongo_collection.update_one(filter, update_query)
+            print(document['title'] + ' tldr_with_tag done.')
 
     # Step 3: store tldr into pgvector
     def write_to_pgvector(self):
@@ -100,6 +101,7 @@ class PipelineMemory:
                 "$set": {'vectordb_stored_timestamp_utc': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')}
             }
             self.mongo_collection.update_one(filter, update_query)
+            print(document['title'] + ' embedding done.')
 
 
 if __name__ == '__main__':

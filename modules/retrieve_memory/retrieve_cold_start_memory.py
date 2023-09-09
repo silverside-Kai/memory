@@ -1,4 +1,4 @@
-def retrieve_deep_unconsciousness(llm, store_basic_raw, user_input, tag=None):
+def retrieve_cold_start_memory(llm, store_basic_raw, user_input, tag=None):
     from langchain.chains import RetrievalQA
 
     if tag:

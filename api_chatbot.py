@@ -6,18 +6,16 @@ from langchain.vectorstores.pgvector import PGVector
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import HuggingFaceBgeEmbeddings
 # from langchain.llms import Ollama
-from langchain.callbacks.manager import CallbackManager
-from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler  
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from modules.tag_meta import tag_meta
-from modules.retrieve_deep_unconsciousness import retrieve_deep_unconsciousness
-from modules.retrieve_working_memory import retrieve_working_memory
-from modules.retrieve_memory_assembly import retrieve_memory_assembly
-from modules.tweet_per_content_prompt import tweet_per_content_prompt
+from modules.load_data.tag_meta import tag_meta
+from modules.retrieve_memory.retrieve_cold_start_memory import retrieve_cold_start_memory
+from modules.retrieve_memory.retrieve_latest_memory import retrieve_latest_memory
+from modules.retrieve_memory.retrieve_memory_assembly import retrieve_memory_assembly
+from modules.prompts.tweet_per_content_prompt import tweet_per_content_prompt
 
 
 os.environ['OPENAI_API_KEY'] = openai_key
@@ -92,26 +90,26 @@ async def tweet_per_content(payload: TweetMessage):
     return response
 
 
-@app.post("/deep_unconsciousness_testing/")
-async def deep_unconsciousness_testing(payload: Testing):
+@app.post("/cold_start_memory_testing/")
+async def cold_start_memory_testing(payload: Testing):
     content = payload.content
     tag = payload.tag
     if tag in tag_list:
-        response = retrieve_deep_unconsciousness(
+        response = retrieve_cold_start_memory(
             llm, store_basic_raw, content, tag)
     else:
-        response = retrieve_deep_unconsciousness(llm, store_basic_raw, content)
+        response = retrieve_cold_start_memory(llm, store_basic_raw, content)
     return response
 
 
-@app.post("/working_memory_testing/")
-async def working_memory_testing(payload: Testing):
+@app.post("/latest_memory_testing/")
+async def latest_memory_testing(payload: Testing):
     content = payload.content
     tag = payload.tag
     if tag in tag_list:
-        response = retrieve_working_memory(llm, store_latest_raw, content, tag)
+        response = retrieve_latest_memory(llm, store_latest_raw, content, tag)
     else:
-        response = retrieve_working_memory(llm, store_latest_raw, content)
+        response = retrieve_latest_memory(llm, store_latest_raw, content)
     return response
 
 
