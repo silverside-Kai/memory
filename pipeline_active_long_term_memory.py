@@ -103,7 +103,7 @@ if __name__ == '__main__':
 
     pipeline_memory = PipelineMemory(mongo_db_name='mvp',
                                      mongo_collection_name='source',
-                                     n_days=1,
+                                     n_days=3,
                                      max_content_len=10000)
     pipeline_memory.load_contents()
     pipeline_memory.loop_over_contents()
