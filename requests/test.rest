@@ -1,4 +1,4 @@
-POST https://ai-town.mcglobal.ai:443/tweet_per_content
+POST https://ai-town.mcglobal.ai:8080/tweet_per_content
 Content-Type: application/json
 
 {
