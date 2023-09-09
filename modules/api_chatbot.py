@@ -40,8 +40,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.add_middleware(HTTPSRedirectMiddleware)
-
 class TweetMessage(BaseModel):
     link: str
     weight: float
