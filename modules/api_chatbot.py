@@ -7,6 +7,7 @@ from langchain.chat_models import ChatOpenAI
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from pydantic import BaseModel
 
 from modules.load_data.tag_meta import tag_meta
@@ -39,6 +40,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.add_middleware(HTTPSRedirectMiddleware)
 
 class TweetMessage(BaseModel):
     link: str
