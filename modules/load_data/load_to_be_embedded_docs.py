@@ -1,6 +1,5 @@
 def load_to_be_embedded_docs(collection, n_days):
-    from modules.beginning_of_certain_date import beginning_of_certain_date
-
+    from modules.misc.beginning_of_certain_date import beginning_of_certain_date
 
     query_reflected_nonstored = {
         "$and": [

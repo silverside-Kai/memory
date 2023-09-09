@@ -1,6 +1,5 @@
 def load_relevant_contents(collection, n_days):
-    from modules.beginning_of_certain_date import beginning_of_certain_date
-
+    from modules.misc.beginning_of_certain_date import beginning_of_certain_date
 
     # Define your query (for example, find documents with a specific field value)
     query_recent_nonreflected = {

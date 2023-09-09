@@ -1,17 +1,13 @@
 import os
 from config import openai_key, openai_api_base, mongo_string, CONNECTION_STRING
 import openai
-
-from langchain.vectorstores.pgvector import PGVector
 from langchain.schema.document import Document
-from langchain.embeddings import HuggingFaceBgeEmbeddings
-
 from modules.load_data.load_relevant_contents import load_relevant_contents
 from modules.load_data.load_to_be_embedded_docs import load_to_be_embedded_docs
 from modules.prompts.tldr import tldr
 from modules.prompts.tagify import tagify
 from modules.load_data.tag_meta import tag_meta
-
+from modules.load_data.load_vector_stores import store_latest_raw
 import pymongo
 from bson import ObjectId
 from datetime import datetime
@@ -23,11 +19,6 @@ class PipelineMemory:
             mongo_string)[mongo_db_name][mongo_collection_name]
         self.n_days = n_days
         self.max_content_len = max_content_len
-        self.latest_raw_store = PGVector(
-            collection_name='latest_raw',
-            connection_string=CONNECTION_STRING,
-            embedding_function=embeddings,
-        )
 
     # Step 1: load all the (or only relevant) documents
     def load_contents(self):
@@ -55,7 +46,7 @@ class PipelineMemory:
             bullet_points = response_text.split('\n')
             bullet_points = [point.lstrip('- ').strip()
                              for point in bullet_points if point.strip()]
-            
+
             tag_metadata = tag_meta()
 
             tldr_with_tag_objects = []
@@ -96,7 +87,7 @@ class PipelineMemory:
                                          "tag": tag,
                                          "link": document['link'],
                                          "title": document['title']})
-                self.latest_raw_store.add_documents([doc])
+                store_latest_raw.add_documents([doc])
             update_query = {
                 "$set": {'vectordb_stored_timestamp_utc': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%fZ')}
             }
@@ -109,12 +100,6 @@ if __name__ == '__main__':
     os.environ['OPENAI_API_KEY'] = openai_key
     openai.api_key = os.environ['OPENAI_API_KEY']
     openai.api_base = openai_api_base
-
-    embeddings = HuggingFaceBgeEmbeddings(
-        model_name="BAAI/bge-base-en",
-        model_kwargs={'device': 'cpu'},
-        encode_kwargs={'normalize_embeddings': True}
-    )
 
     pipeline_memory = PipelineMemory(mongo_db_name='mvp',
                                      mongo_collection_name='source',
