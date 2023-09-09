@@ -16,6 +16,7 @@ def tweet_per_content_prompt(link, llm, store_basic_raw, store_latest_raw, weigh
                                            weights=[(1-weight_latest), weight_latest])
     qa = RetrievalQA.from_chain_type(
         llm=llm, chain_type="stuff", retriever=ensemble_retriever)
+    # this can probably be useful to improve QA: https://python.langchain.com/docs/use_cases/question_answering/#customizing-the-prompt
     
     tldr_with_tag = None
     for doc in relevant_doc:

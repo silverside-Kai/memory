@@ -1,5 +1,5 @@
 import os
-from config import openai_key, mongo_string, CONNECTION_STRING
+from config import openai_key, openai_api_base, mongo_string, CONNECTION_STRING
 import openai
 
 from langchain.vectorstores.pgvector import PGVector
@@ -106,6 +106,7 @@ if __name__ == '__main__':
 
     os.environ['OPENAI_API_KEY'] = openai_key
     openai.api_key = os.environ['OPENAI_API_KEY']
+    openai.api_base = openai_api_base
 
     embeddings = HuggingFaceBgeEmbeddings(
         model_name="BAAI/bge-base-en",
@@ -115,7 +116,7 @@ if __name__ == '__main__':
 
     pipeline_memory = PipelineMemory(mongo_db_name='mvp',
                                      mongo_collection_name='source',
-                                     n_days=2,
+                                     n_days=1,
                                      max_content_len=10000)
     pipeline_memory.load_contents()
     pipeline_memory.loop_over_contents()

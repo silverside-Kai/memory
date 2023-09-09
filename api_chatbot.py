@@ -1,11 +1,11 @@
-from config import openai_key, CONNECTION_STRING
+from config import openai_key, openai_api_base, CONNECTION_STRING
 import openai
 import os
 
 from langchain.vectorstores.pgvector import PGVector
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import HuggingFaceBgeEmbeddings
-from langchain.llms import Ollama
+# from langchain.llms import Ollama
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler  
 
@@ -22,11 +22,13 @@ from modules.tweet_per_content_prompt import tweet_per_content_prompt
 
 os.environ['OPENAI_API_KEY'] = openai_key
 openai.api_key = openai_key
+openai.api_base = openai_api_base
 
-# llm = ChatOpenAI(model_name='gpt-3.5-turbo-16k-0613')
-llm = Ollama(base_url="http://localhost:11434", 
-             model="llama2", 
-             callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]))
+llm = ChatOpenAI(model_name='gpt-3.5-turbo-16k-0613',
+                 openai_api_base=openai_api_base)
+# llm = Ollama(base_url="http://localhost:11434", 
+#              model="llama2", 
+#              callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]))
 
 embeddings = HuggingFaceBgeEmbeddings(
     model_name="BAAI/bge-base-en",
@@ -75,7 +77,7 @@ class Testing(BaseModel):
     tag: str
 
 
-class Testing(BaseModel):
+class TestingAssembly(BaseModel):
     content: str
     tag: str
     weight: float
@@ -114,7 +116,7 @@ async def working_memory_testing(payload: Testing):
 
 
 @app.post("/memory_assembly_testing/")
-async def memory_assembly_testing(payload: Testing):
+async def memory_assembly_testing(payload: TestingAssembly):
     content = payload.content
     tag = payload.tag
     weight_latest = payload.weight

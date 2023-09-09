@@ -1,7 +1,8 @@
-POST http://localhost:8080/tweet
+POST http://localhost:8080/memory_assembly_testing
 Content-Type: application/json
 
 {
-    "title": "The Proof Is in the Cloud: GeForce NOW Announces Ultimate KovaaK’s Challenge Results",
-    "content": "The verdict is in: A GeForce NOW Ultimate membership raises the bar on gaming. Members have been tackling the Ultimate KovvaK’s challenge head-on and seeing for themselves how the power of Ultimate improves their gaming with 240 frames per second streaming. The popular training title that helps gamers improve their aim fully launches in the Read article >"
+    "content": "what is the genre of Beatles?",
+    "tag": "",    
+    "weight": 0.5
 }
