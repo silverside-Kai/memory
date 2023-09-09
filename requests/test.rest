@@ -2,7 +2,7 @@ POST http://localhost:8080/memory_assembly_testing
 Content-Type: application/json
 
 {
-    "content": "what is the genre of Beatles?",
+    "content": "Why is GPT4 so good?",
     "tag": "",    
     "weight": 0.5
 }
