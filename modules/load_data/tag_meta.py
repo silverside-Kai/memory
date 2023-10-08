@@ -1,10 +1,10 @@
 def tag_meta():
-    from config import CONNECTION_STRING
+    from config import pgvector_string
     from sqlalchemy import create_engine
     import pandas as pd
 
 
-    pg_engine = create_engine(CONNECTION_STRING)
+    pg_engine = create_engine(pgvector_string)
     query_string = """
     SELECT
         e.document,

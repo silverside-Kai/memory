@@ -21,20 +21,26 @@ def tweet_per_content_prompt(link, llm, store_basic_raw, store_latest_raw, weigh
     tldr_with_tag = None
     for doc in relevant_doc:
         tldr_with_tag = doc['tldr_with_tag']
+
+    bullet_points = [item["bullet_point"] for item in tldr_with_tag]
     
-    query = f"""###Prompt can you help organise the following content
-      into a tweet and quantitatively assess its importance in 
-      very brief words with a score in a 0-10 range?
-      Instruction 1: Put the importance score at the beginninng in the format "Importance Score: X/10". Replace X with your score.
-      Instruction 2: Then summarise the content into bullet points starting with relevant emoji.
-      Instruction 3: Finally if possible relate the current content to any existing work and point out the current content's added value.
-      Add some relevant hashtags at the end if possible.
-      Content: '{tldr_with_tag}'"""
+    query = f"""###Prompt can you help organise the following bullet points
+      into a tweet (NO HASHTAG) in very brief words (<250 chars) and quantitatively assess its importance with a score in a 0-10 range?
+      Step 1: Put the importance score at the beginninng in the format "Importance Score: X/10". Replace X with your score.
+      Please give the score following an aggressive (widespread) normal distribution with the mean as 6.
+      An example of being very important is the release of GPT4. It's a 10. Because it's relevant to everyone.
+      An example of being not important at all is any content trying to do marketing for companies. It's a 1. Because it's irrelevant for most people.
+      Step 2: Summarise the content into bullet points each starting with one relevant emoji as bullet.
+      If possible the first bullet point should be about why you think this content is important or not important. Given your reason.
+      Bullet points: {bullet_points}"""
 
     try:
         llm_response = qa(query)
         result = llm_response["result"]
-        tweet = result + f"""\n{link}"""
+        while len(result) > 240:
+            last_newline_index = result.rfind("\n")
+            result = result[:last_newline_index]
+        tweet = result + f""" #AI\n{link}"""
         return tweet
     except Exception as err:
         print('Exception occurred. Please try again', str(err))

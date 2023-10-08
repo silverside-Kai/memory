@@ -1,7 +1,6 @@
-POST https://ai-town.mcglobal.ai/tweet_per_content
+POST http://localhost:8080/retweet/
 Content-Type: application/json
 
 {
-    "link": "https://arxiv.org/abs/2309.03315",
-    "weight": 0.5
+    "link": "https://arxiv.org/abs/2309.03241"
 }

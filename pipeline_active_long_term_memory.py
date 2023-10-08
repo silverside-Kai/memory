@@ -1,5 +1,5 @@
 import os
-from config import openai_key, openai_api_base, mongo_string, CONNECTION_STRING
+from config import openai_key, openai_api_base, mongo_string
 import openai
 from langchain.schema.document import Document
 from modules.load_data.load_relevant_contents import load_relevant_contents
@@ -79,7 +79,7 @@ class PipelineMemory:
             contents = document['tldr_with_tag']
             for ct in contents:
                 content = ct['bullet_point']
-                content = f'By {document["source"]} at {document["created_time"]} with the link {document["link"]}, {content}'
+                content = f'By {document["source"]}, {content}'
                 tag = ct['tag']
                 doc = Document(page_content=content,
                                metadata={"source": document["source"],
