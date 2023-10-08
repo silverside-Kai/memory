@@ -13,6 +13,7 @@ from pydantic import BaseModel
 from modules.load_data.tag_meta import tag_meta
 from modules.retrieve_memory.retrieve_memory_assembly import retrieve_memory_assembly
 from modules.prompts.tweet_per_content_prompt import tweet_per_content_prompt
+from modules.prompts.retweet_prompt import retweet_prompt
 from modules.load_data.load_vector_stores import store_basic_raw, store_latest_raw
 
 os.environ['OPENAI_API_KEY'] = openai_key
@@ -40,9 +41,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 class TweetMessage(BaseModel):
     link: str
     weight: float
+
+
+class RetweetMessage(BaseModel):
+    link: str
 
 
 class TestingAssembly(BaseModel):
@@ -57,6 +63,14 @@ async def tweet_per_content(payload: TweetMessage):
     weight_latest = payload.weight
     response = tweet_per_content_prompt(
         link, llm, store_basic_raw, store_latest_raw, weight_latest)
+    return response
+
+
+@app.post("/retweet/")
+async def retweet(payload: RetweetMessage):
+    link = payload.link
+    response = retweet_prompt(
+        link, llm, store_basic_raw)
     return response
 
 
