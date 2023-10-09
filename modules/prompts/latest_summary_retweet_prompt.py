@@ -20,9 +20,9 @@ def latest_summary_retweet_prompt(link):
         top_content = document['content']
         top_link = document['link']
 
-    prompt = """Generate one sentence to explain what the AI content is about given the following abstract, in an appealing way.
-    Directly generate. No need for quotation marks."""
-    prompt = prompt + 'abstract: ' + top_content
+    prompt = """Generate one sentence to explain what the AI content is about given the above abstract, in an appealing way.
+    Directly generate. No need to add quotation marks."""
+    prompt = 'Abstract: ' + top_content + ' ' + prompt
 
     prompts = [{"role": "user",
                 "content": prompt}]
