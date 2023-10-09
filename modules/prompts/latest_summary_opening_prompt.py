@@ -5,7 +5,8 @@ def latest_summary_opening_prompt():
     prompt = """I am writing a content template for my twitter account. This type of tweet is called "AI Daily Pulse"
 Write an opening sentence to give an introduction of last-24-hour AI important news and trends.
 You need to consider the text layout and appeal.
-Directly write. No need to add quotation marks!"""
+Don't enclose output in single (') or double quotes("), provide it as it is.
+"""
 
     prompts = [{"role": "user",
                 "content": prompt}]
