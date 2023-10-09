@@ -59,10 +59,6 @@ class TestingAssembly(BaseModel):
     weight: float
 
 
-class SummaryTweet(BaseModel):
-    last_n_days: int
-
-
 @app.post("/tweet_per_content/")
 async def tweet_per_content(payload: TweetMessage):
     link = payload.link
@@ -81,9 +77,8 @@ async def retweet(payload: RetweetMessage):
 
 
 @app.post("/summary_tweet_opening/")
-async def summary_opening(payload: SummaryTweet):
-    last_n_days = payload.last_n_days
-    response = latest_summary_opening_prompt(last_n_days)
+async def summary_opening():
+    response = latest_summary_opening_prompt()
     return response
 
 
