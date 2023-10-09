@@ -21,7 +21,8 @@ def latest_summary_opening_prompt(last_n_days):
 
     prompt = """I am writing a content template for my twitter account. This type of tweet is called "AI Daily Pulse"
 
-Write an opening sentence to give an introduction of last-24-hour AI important news and trends, no need to show the detailed information, making readers curious about what are the news. You need to consider the text layout and appeal."""
+Write an opening sentence to give an introduction of last-24-hour AI important news and trends, no need to show the detailed information, making readers curious about what are the news. You need to consider the text layout and appeal.
+Directly write. No need for quotation marks."""
     prompt = prompt + combined_contents
 
     prompts = [{"role": "user",
