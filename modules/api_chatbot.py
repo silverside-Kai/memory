@@ -14,6 +14,8 @@ from modules.load_data.tag_meta import tag_meta
 from modules.retrieve_memory.retrieve_memory_assembly import retrieve_memory_assembly
 from modules.prompts.tweet_per_content_prompt import tweet_per_content_prompt
 from modules.prompts.retweet_prompt import retweet_prompt
+from modules.prompts.latest_summary_opening_prompt import latest_summary_opening_prompt
+from modules.prompts.latest_summary_retweet_prompt import latest_summary_retweet_prompt
 from modules.load_data.load_vector_stores import store_basic_raw, store_latest_raw
 
 os.environ['OPENAI_API_KEY'] = openai_key
@@ -57,6 +59,10 @@ class TestingAssembly(BaseModel):
     weight: float
 
 
+class SummaryTweet(BaseModel):
+    last_n_days: int
+
+
 @app.post("/tweet_per_content/")
 async def tweet_per_content(payload: TweetMessage):
     link = payload.link
@@ -71,6 +77,20 @@ async def retweet(payload: RetweetMessage):
     link = payload.link
     response = retweet_prompt(
         link, llm, store_basic_raw)
+    return response
+
+
+@app.post("/summary_tweet_opening/")
+async def summary_opening(payload: SummaryTweet):
+    last_n_days = payload.last_n_days
+    response = latest_summary_opening_prompt(last_n_days)
+    return response
+
+
+@app.post("/summary_retweet/")
+async def summary_retweet(payload: SummaryTweet):
+    last_n_days = payload.last_n_days
+    response = latest_summary_retweet_prompt(last_n_days)
     return response
 
 

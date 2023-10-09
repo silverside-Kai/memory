@@ -1,6 +1,6 @@
-POST http://localhost:8080/retweet/
+POST http://localhost:8080/summary_retweet/
 Content-Type: application/json
 
 {
-    "link": "https://arxiv.org/abs/2309.03241"
+    "last_n_days": 1
 }
