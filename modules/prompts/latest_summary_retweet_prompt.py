@@ -23,7 +23,8 @@ def latest_summary_retweet_prompt(last_n_days):
     top_content = contents[0]
     top_link = links[0]
 
-    prompt = """Generate one sentence to explain what the AI content is about given the following abstract, in an appealing way."""
+    prompt = """Generate one sentence to explain what the AI content is about given the following abstract, in an appealing way.
+    Directly generate. No quote needed."""
     prompt = prompt + 'abstract: ' + top_content
 
     prompts = [{"role": "user",
