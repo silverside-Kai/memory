@@ -2,8 +2,8 @@ def latest_summary_opening_prompt():
     import openai
     from modules.misc.max_length import truncate_string
 
-    prompt = """I am writing a content template for my twitter account. This type of tweet is called "AI Daily Pulse"
-Write an opening sentence to give an introduction of last-24-hour AI important news and trends.
+    prompt = """I am writing a content template for my twitter account. This type of tweet is called AI Daily Pulse
+Help me write an introduction of last-24-hour AI important news and trends.
 You need to consider the text layout and appeal.
 Don't enclose output in single (') or double quotes("), provide it as it is.
 """
