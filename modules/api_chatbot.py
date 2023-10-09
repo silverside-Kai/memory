@@ -88,9 +88,9 @@ async def summary_opening(payload: SummaryTweet):
 
 
 @app.post("/summary_retweet/")
-async def summary_retweet(payload: SummaryTweet):
-    last_n_days = payload.last_n_days
-    response = latest_summary_retweet_prompt(last_n_days)
+async def summary_retweet(payload: RetweetMessage):
+    link = payload.link
+    response = latest_summary_retweet_prompt(link)
     return response
 
 

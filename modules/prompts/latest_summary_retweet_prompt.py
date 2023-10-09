@@ -1,27 +1,24 @@
-def latest_summary_retweet_prompt(last_n_days):
+def latest_summary_retweet_prompt(link):
     import openai
     from config import openai_key, openai_api_base
-    from modules.load_data.load_docs_excl_daily_tweeted import load_docs_excl_daily_tweeted
     from modules.misc.max_length import truncate_string
     import os
+    import pymongo
+    from config import mongo_string
 
 
     os.environ['OPENAI_API_KEY'] = openai_key
     openai.api_key = openai_key
     openai.api_base = openai_api_base
-    data = load_docs_excl_daily_tweeted(last_n_days)
 
-    contents = []
-    links = []
+    mongo_collection = pymongo.MongoClient(mongo_string)['mvp']['source']
+
+    query = {"link": link}
+    data = mongo_collection.find(query)
+
     for document in data:
-        content = document['content']
-        link = document['link']
-        if len(content) == 0:
-            content = document['content_long']
-        contents.append(content)
-        links.append(link)
-    top_content = contents[0]
-    top_link = links[0]
+        top_content = document['content']
+        top_link = document['link']
 
     prompt = """Generate one sentence to explain what the AI content is about given the following abstract, in an appealing way.
     Directly generate. No need for quotation marks."""
