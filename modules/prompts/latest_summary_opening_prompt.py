@@ -6,6 +6,7 @@ def latest_summary_opening_prompt():
 Help me write an introduction of last-24-hour AI important news and trends.
 You need to consider the text layout and appeal.
 Don't enclose output in single (') or double quotes("), provide it as it is.
+Use fewer than 270 characters.
 """
 
     prompts = [{"role": "user",
