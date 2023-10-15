@@ -33,6 +33,6 @@ Use fewer than 270 characters in total.
     )
 
     response_text = response['choices'][0]['message']['content']
-    result = truncate_string(response_text, max_length=270)
+    result = 'AI Daily Pulse\n' + truncate_string(response_text, max_length=270)
 
     return result
