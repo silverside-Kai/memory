@@ -1,6 +1,6 @@
-POST http://localhost:8080/summary_retweet/
+POST http://0.0.0.0:8080/summary_tweet_opening/
 Content-Type: application/json
 
 {
-    "last_n_days": 1
+    "num_contents": 3
 }

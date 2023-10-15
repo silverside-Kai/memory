@@ -59,6 +59,10 @@ class TestingAssembly(BaseModel):
     weight: float
 
 
+class SummaryBulletPoint(BaseModel):
+    num_contents: int
+
+
 @app.post("/tweet_per_content/")
 async def tweet_per_content(payload: TweetMessage):
     link = payload.link
@@ -77,8 +81,9 @@ async def retweet(payload: RetweetMessage):
 
 
 @app.post("/summary_tweet_opening/")
-async def summary_opening():
-    response = latest_summary_opening_prompt()
+async def summary_opening(payload: SummaryBulletPoint):
+    num_contents = payload.num_contents
+    response = latest_summary_opening_prompt(num_contents)
     return response
 
 

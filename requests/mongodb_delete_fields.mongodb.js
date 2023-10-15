@@ -10,8 +10,8 @@ db.getCollection('source').updateMany(
     {},
     {
       $unset: {
-        tldr_with_tag: 1,
-        vectordb_stored_timestamp_utc: 1
+        daily_tweeted: 1,
+        tweet_id: 1
       }
     }
   );
