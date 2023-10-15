@@ -13,12 +13,12 @@ def latest_summary_opening_prompt(num_contents):
     data = mongo_collection.find(query).sort(sort_order).limit(num_contents)
 
     top_contents = ''
-    for document in data:
-        top_content = document['content']
+    for index, document in enumerate(data):
+        top_content = f'{index+1}: ' + document['content'] + '\n' + document['content_long']
+        top_content = truncate_string(top_content, max_length=500)
         top_contents = top_contents + top_content + '\n'
 
-    prompt = f"""Write a very short sentence to attract readers that we're doing AI Daily Pulse.
-And then summarise the above AI content in one sentence.
+    prompt = f"""Summarise the above content in {num_contents} short bullet points, as the prologue of AI Daily Pulse.
 Use fewer than 270 characters in total.
 """
     prompt = top_contents + prompt
