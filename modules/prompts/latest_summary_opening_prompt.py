@@ -15,7 +15,7 @@ def latest_summary_opening_prompt(num_contents):
     top_contents = ''
     for index, document in enumerate(data):
         top_content = f'Bite {index+1}: ' + document['content'] + '\n' + document['content_long']
-        top_content = truncate_string(top_content, max_length=500)
+        top_content = top_content[:500]
         top_contents = top_contents + top_content + '\n'
 
     prompt = f"""Summarise the above content in {num_contents} very short bullet points (each <10 words) covering the {num_contents} bites respectively, as the prologue of AI Daily Bento.
