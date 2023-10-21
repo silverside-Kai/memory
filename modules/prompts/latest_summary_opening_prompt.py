@@ -3,6 +3,7 @@ def latest_summary_opening_prompt(num_contents):
     from modules.misc.max_length import truncate_string
     import pymongo
     from config import mongo_string
+    from datetime import datetime
 
 
     mongo_collection = pymongo.MongoClient(mongo_string)['mvp']['source']
@@ -33,6 +34,7 @@ Use fewer than 270 characters in total.
     )
 
     response_text = response['choices'][0]['message']['content']
-    result = '🍱 AI Daily Bento\n' + truncate_string(response_text, max_length=270)
+    current_date = datetime.now().strftime('%Y-%m-%d')
+    result = f'🍱 AI Daily Bento {current_date}\n' + truncate_string(response_text, max_length=270)
 
     return result
