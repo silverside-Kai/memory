@@ -16,6 +16,7 @@ from modules.prompts.tweet_per_content_prompt import tweet_per_content_prompt
 from modules.prompts.retweet_prompt import retweet_prompt
 from modules.prompts.latest_summary_opening_prompt import latest_summary_opening_prompt
 from modules.prompts.latest_summary_retweet_prompt import latest_summary_retweet_prompt
+from modules.prompts.insight_qa_prompt import insight_qa_prompt
 from modules.load_data.load_vector_stores import store_basic_raw, store_latest_raw
 
 os.environ['OPENAI_API_KEY'] = openai_key
@@ -91,6 +92,13 @@ async def summary_opening(payload: SummaryBulletPoint):
 async def summary_retweet(payload: RetweetMessage):
     link = payload.link
     response = latest_summary_retweet_prompt(link)
+    return response
+
+
+@app.post("/insight_qa/")
+async def insight_qa(payload: RetweetMessage):
+    link = payload.link
+    response = insight_qa_prompt(link)
     return response
 
 

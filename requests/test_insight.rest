@@ -1,0 +1,6 @@
+POST http://0.0.0.0:8080/insight_qa/
+Content-Type: application/json
+
+{
+    "link": "https://arxiv.org/abs/2310.12921"
+}
