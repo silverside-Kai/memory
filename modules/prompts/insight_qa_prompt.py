@@ -23,7 +23,8 @@ def insight_qa_prompt(link):
 
     prompt = """Write a very short but interesting question about the AI content in 80 characters.
     And then answer this question in one simple sentence in 150 characters.
-    All should be fewer than 255 characters."""
+    All should be fewer than 255 characters.
+    Start the question and the answer with an emoji respectively."""
     prompt = 'Content: ' + top_content + ' ' + prompt
 
     prompts = [{"role": "user",
