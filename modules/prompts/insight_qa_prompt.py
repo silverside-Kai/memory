@@ -21,9 +21,9 @@ def insight_qa_prompt(link):
         top_content = top_content[:500]
         top_link = document['link']
 
-    prompt = """Generate a very short but interesting question about the AI content in 80 characters.
+    prompt = """Write a very short but interesting question about the AI content in 80 characters.
     And then answer this question in one simple sentence in 150 characters.
-    Both Q and A should be fewer than 255 characters."""
+    All should be fewer than 255 characters."""
     prompt = 'Content: ' + top_content + ' ' + prompt
 
     prompts = [{"role": "user",
