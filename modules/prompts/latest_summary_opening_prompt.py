@@ -29,7 +29,7 @@ Use fewer than 270 characters in total.
 
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
-        request_timeout=30,
+        request_timeout=90,
         messages=prompts
     )
 
