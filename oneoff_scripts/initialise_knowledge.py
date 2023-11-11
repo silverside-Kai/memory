@@ -1,5 +1,5 @@
 import os
-from config import CONNECTION_STRING
+from config import pgvector_string
 from langchain.vectorstores.pgvector import PGVector
 from langchain.schema.document import Document
 from langchain.embeddings import HuggingFaceBgeEmbeddings
@@ -16,7 +16,7 @@ embeddings = HuggingFaceBgeEmbeddings(
 
 store_tags = PGVector(
     collection_name='tags',
-    connection_string=CONNECTION_STRING,
+    connection_string=pgvector_string,
     embedding_function=embeddings,
 )
 
@@ -99,4 +99,4 @@ for tag in tag_list:
             vectordb = PGVector.from_documents(documents=texts,
                                                embedding=embeddings,
                                                collection_name='basic_raw',
-                                               connection_string=CONNECTION_STRING)
+                                               connection_string=pgvector_string)
