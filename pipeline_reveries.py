@@ -28,8 +28,8 @@ for index, row in data.iterrows():
     new_str = ', '.join(line.split(', ')[1:])
     docs = docs + new_str + ' '
 
-prompt = 'Given only the information following, what are 3 most salient highlevel questions we can answer about the subjects in the statements? '
-prompt = prompt + docs
+prompt = 'Given only the above information, what are 5 most salient highlevel questions we can answer about the subjects in the statements? '
+prompt = docs + prompt
 
 prompts = [{"role": "user",
             "content": prompt}]
