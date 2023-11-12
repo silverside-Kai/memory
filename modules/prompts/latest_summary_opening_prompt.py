@@ -1,4 +1,4 @@
-def latest_summary_opening_prompt(num_contents):
+def latest_summary_opening_prompt(num_contents, media):
     import openai
     from modules.misc.max_length import truncate_string
     import pymongo
@@ -8,8 +8,14 @@ def latest_summary_opening_prompt(num_contents):
 
     mongo_collection = pymongo.MongoClient(mongo_string)['mvp']['source']
 
-    query = {"daily_tweeted": {"$exists": False}}
-    sort_order = [("created_time", pymongo.DESCENDING)]
+    query = {
+        "$and": [
+            {"daily_tweeted": {"$exists": False}},
+            {"score": {"$exists": True}},
+            {"media": media}
+        ]
+    }
+    sort_order = [("score", pymongo.DESCENDING)]
 
     data = mongo_collection.find(query).sort(sort_order).limit(num_contents)
 
@@ -19,7 +25,7 @@ def latest_summary_opening_prompt(num_contents):
         top_content = top_content[:500]
         top_contents = top_contents + top_content + '\n'
 
-    prompt = f"""Summarise the above content in {num_contents} very short bullet points (each <10 words) covering the {num_contents} bites respectively, as the prologue of AI Daily Bento.
+    prompt = f"""Summarise the above content in {num_contents} very short bullet points (each <10 words) covering the {num_contents} bites respectively.
 Use fewer than 270 characters in total.
 """
     prompt = top_contents + prompt
