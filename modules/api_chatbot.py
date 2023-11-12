@@ -7,7 +7,6 @@ from langchain.chat_models import ChatOpenAI
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 from pydantic import BaseModel
 
 from modules.load_data.tag_meta import tag_meta
@@ -62,6 +61,7 @@ class TestingAssembly(BaseModel):
 
 class SummaryBulletPoint(BaseModel):
     num_contents: int
+    media: str
 
 
 @app.post("/tweet_per_content/")
@@ -84,7 +84,8 @@ async def retweet(payload: RetweetMessage):
 @app.post("/summary_tweet_opening/")
 async def summary_opening(payload: SummaryBulletPoint):
     num_contents = payload.num_contents
-    response = latest_summary_opening_prompt(num_contents)
+    media = payload.media
+    response = latest_summary_opening_prompt(num_contents, media)
     return response
 
 
