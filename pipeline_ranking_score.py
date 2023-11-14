@@ -46,16 +46,16 @@ for index, document in enumerate(data):
     timestamp = datetime.fromisoformat(timestamp_str.replace('Z', '+00:00')).timestamp()
     timestamp = int(timestamp)
     score = calculate_blog_score(timestamp, int(source_importance), current_time, max_param, alpha, beta)
-    # mongo_collection.update_one(
-    #     {"_id": document['_id']},
-    #     {"$set": {"score": score}}
-    # )
+    mongo_collection.update_one(
+        {"_id": document['_id']},
+        {"$set": {"score": score}}
+    )
     id_str = str(document['_id'])
     title_str = document['title']
     link_str = document['link']
     source_str = document['source']
     type_str = document['type']
-    score_str = str(document['score'])
+    score_str = str(score)
 
         # Append data to lists
     ids.append(id_str)
