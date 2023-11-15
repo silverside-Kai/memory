@@ -9,7 +9,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 # Step 1: Generate tag metadata and store in the vectordb
 embeddings = HuggingFaceBgeEmbeddings(
-    model_name="BAAI/bge-base-en",
+    model_name="BAAI/bge-large-en",
     model_kwargs={'device': 'cpu'},
     encode_kwargs={'normalize_embeddings': True}
 )

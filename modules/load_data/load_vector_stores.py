@@ -4,7 +4,7 @@ from langchain.embeddings import HuggingFaceBgeEmbeddings
 
 
 embeddings = HuggingFaceBgeEmbeddings(
-    model_name="BAAI/bge-base-en",
+    model_name="BAAI/bge-large-en",
     model_kwargs={'device': 'cpu'},
     encode_kwargs={'normalize_embeddings': True}
 )

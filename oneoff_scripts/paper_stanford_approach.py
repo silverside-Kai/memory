@@ -52,7 +52,7 @@ store = PGVector(
     embedding_function=embeddings,
 )
 
-store.add_documents(documents)
+store.add_documents(texts)
 
 retriever = store.as_retriever()
 llm = ChatOpenAI(model_name='gpt-3.5-turbo-16k-0613',
