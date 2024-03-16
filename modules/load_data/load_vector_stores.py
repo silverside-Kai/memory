@@ -9,6 +9,12 @@ embeddings = HuggingFaceBgeEmbeddings(
     encode_kwargs={'normalize_embeddings': True}
 )
 
+embeddings_base = HuggingFaceBgeEmbeddings(
+    model_name="BAAI/bge-base-en",
+    model_kwargs={'device': 'cpu'},
+    encode_kwargs={'normalize_embeddings': True}
+)
+
 store_basic_raw = PGVector(
     collection_name='basic_raw',
     connection_string=pgvector_string,
