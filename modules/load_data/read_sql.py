@@ -1,4 +1,4 @@
-def read_sql(sql_file_name, num_docs):
+def read_sql(sql_file_name, num_docs=50):
     from config import pgvector_string
     from sqlalchemy import create_engine
     import pandas as pd
@@ -12,4 +12,5 @@ def read_sql(sql_file_name, num_docs):
     sql_code = sql_code.replace('\n', ' ')
 
     docs = pd.read_sql(sql_code, postgresql_engine, params={'limit': num_docs})
+
     return docs
